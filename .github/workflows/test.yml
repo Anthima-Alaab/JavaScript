@@ -1,0 +1,37 @@
+name: إختبار
+on:
+  push:
+  pull_request:
+
+concurrency:
+  # المجموعة بناءً على اسم العملية والطلب المسحوب إذا وُجد، إذا لم يوجد طلب مسحوب، دعها تعمل حتى تعمل علامات النقل
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: إختبار
+    runs-on: ubuntu-latest
+    steps:
+      - name: الفحص
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: إعداد Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          registry-url: https://registry.npmjs.org
+
+      - name: تثبيت التبعيات
+        run: npm ci
+
+      - name: فحص الكود
+        run: npm run lint
+
+      - name: تنسيق الكود
+        run: npm run format
+
+      - name: إختبار الكود
+        run: npm test

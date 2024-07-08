@@ -1,0 +1,55 @@
+{
+  "displayName": "Line",
+  "name": "@anthima/line",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "types": "workspace ./workspace.json -t",
+    "docs": "workspace ./workspace.json -t -d",
+    "lint": "eslint . --fix --ignore-path .gitignore",
+    "format": "prettier . --write --ignore-path .gitignore",
+    "test": "mocha ./tests/**/*.test.js"
+  },
+  "type": "module",
+  "main": "./src/exports.js",
+  "types": "./types/exports.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/exports.js",
+      "default": "./src/exports.js",
+      "types": "./types/exports.d.ts"
+    }
+  },
+  "files": [
+    "src/",
+    "types/",
+    "LICENSE",
+    "*.md"
+  ],
+  "homepage": "https://Game-Anthima.github.io/Line",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Game-Anthima/Line.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Game-Anthima/Line/issues"
+  },
+  "keywords": [
+    "line"
+  ],
+  "author": {
+    "name": "Assayyaad",
+    "email": "hi@thealpha.pro",
+    "url": "https://links.thealpha.pro"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@disqada/workspace": "^1.5.1",
+    "@types/node": "*",
+    "prettier": "*",
+    "eslint": "*",
+    "eslint-plugin-jsdoc": "*",
+    "eslint-plugin-mocha": "^10.3.0",
+    "mocha": "^10.3.0"
+  }
+}
