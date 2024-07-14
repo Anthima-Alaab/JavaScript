@@ -1,10 +1,11 @@
 /** @typedef {import('../options.js').Line} Line */
+/** @typedef {import("../imports.js").Point} Point */
 
 /**
  * min is 0, max is 1, center is 0.5
  * @param {Line} line
- * @param {number} point between start and end inclusive
- * @returns {number}
+ * @param {Point} point between start and end inclusive
+ * @returns {Point}
  */
 export function to({ dis, neg, end }, point) {
   if (point === 0) return neg ? 1 : 0
@@ -14,8 +15,8 @@ export function to({ dis, neg, end }, point) {
 
 /**
  * @param {Line} line
- * @param {number} point between start and end inclusive
- * @returns {number}
+ * @param {Point} point between start and end inclusive
+ * @returns {Point}
  */
 to.clamp = function (line, point) {
   if (point >= line.max) return 1
@@ -25,8 +26,8 @@ to.clamp = function (line, point) {
 
 /**
  * @param {Line} line
- * @param {number} point between start and end inclusive
- * @returns {number}
+ * @param {Point} point between start and end inclusive
+ * @returns {Point}
  */
 to.clamp.min = function (line, point) {
   if (point <= line.min) return 0
@@ -35,8 +36,8 @@ to.clamp.min = function (line, point) {
 
 /**
  * @param {Line} line
- * @param {number} point between start and end inclusive
- * @returns {number}
+ * @param {Point} point between start and end inclusive
+ * @returns {Point}
  */
 to.clamp.max = function (line, point) {
   if (point >= line.max) return 1
@@ -46,8 +47,8 @@ to.clamp.max = function (line, point) {
 /**
  * min is 0, max is 1, center is 0.5
  * @param {Line} line
- * @param {number} t between 0 and 1 inclusive
- * @returns {number}
+ * @param {Point} t between 0 and 1 inclusive
+ * @returns {Point}
  */
 export function from(line, t) {
   if (t === 1) return from.max(line)
@@ -60,8 +61,8 @@ export function from(line, t) {
 
 /**
  * @param {Line} line
- * @param {number} t between 0 and 1 inclusive
- * @returns {number}
+ * @param {Point} t between 0 and 1 inclusive
+ * @returns {Point}
  */
 from.clamp = function (line, t) {
   if (t >= 1) return from.max(line)
@@ -71,8 +72,8 @@ from.clamp = function (line, t) {
 
 /**
  * @param {Line} line
- * @param {number} t between 0 and 1 inclusive
- * @returns {number}
+ * @param {Point} t between 0 and 1 inclusive
+ * @returns {Point}
  */
 from.clamp.max = function (line, t) {
   if (t >= 1) return from.max(line)
@@ -81,8 +82,8 @@ from.clamp.max = function (line, t) {
 
 /**
  * @param {Line} line
- * @param {number} t between 0 and 1 inclusive
- * @returns {number}
+ * @param {Point} t between 0 and 1 inclusive
+ * @returns {Point}
  */
 from.clamp.min = function (line, t) {
   if (t <= 0) return from.min(line)
@@ -91,7 +92,7 @@ from.clamp.min = function (line, t) {
 
 /**
  * @param {Line} line
- * @returns {number}
+ * @returns {Point}
  */
 from.center = function (line) {
   return from(line, 0.5)
@@ -99,7 +100,7 @@ from.center = function (line) {
 
 /**
  * @param {Line} line
- * @returns {number}
+ * @returns {Point}
  */
 from.min = function ({ dis, neg }) {
   // NOTE: faster than calling `from(line, 0)`
@@ -108,7 +109,7 @@ from.min = function ({ dis, neg }) {
 
 /**
  * @param {Line} line
- * @returns {number}
+ * @returns {Point}
  */
 from.max = function ({ dis, neg }) {
   // NOTE: faster than calling `from(line, 1)`

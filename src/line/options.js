@@ -1,5 +1,4 @@
-// /** @typedef {import("./imports").Point} Point */
-/** @typedef {number} Point */
+/** @typedef {import("./imports.js").Point} Point */
 
 export {}
 

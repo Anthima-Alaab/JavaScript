@@ -1,7 +1,7 @@
 export {}
 
 /**
- * @typedef {number | Point2 | Point3} Point
+ * @typedef {number} Point
  */
 
 /**

@@ -1,23 +1,24 @@
 /** @typedef {import('../options.js').Line} Line */
+/** @typedef {import("../imports.js").Point} Point */
 
 /**
- * Checks if a given value is inside the range defined by a Line object.
+ * Checks if a given point is inside the range defined by a Line object.
  * @param {Line} line - The Line object defining the range.
- * @param {number} value - The value to check.
- * @returns {boolean} - Returns true if the value is inside the range, false otherwise.
+ * @param {Point} point - The point to check.
+ * @returns {boolean} - Returns true if the point is inside the range, false otherwise.
  */
-export function inside({ min, max }, value) {
-  // Check if the value is greater than or equal to min and less than or equal to max, then return true; otherwise, return false.
-  return value >= min && value <= max
+export function inside({ min, max }, point) {
+  // Check if the point is greater than or equal to min and less than or equal to max, then return true; otherwise, return false.
+  return point >= min && point <= max
 }
 
 /**
  * Moves the current position by a specified step within the range defined by a Line object.
  * @param {Line} line - The Line object defining the range.
- * @param {number} current - The current position.
- * @param {number} step - The step to move by.
+ * @param {Point} current - The current position.
+ * @param {Point} step - The step to move by.
  * @param {boolean} [inverse=false] - Optional parameter to indicate if the movement should be in the opposite direction. @defaultValue false
- * @returns {number} - Returns the new position after moving.
+ * @returns {Point} - Returns the new position after moving.
  */
 export function move({ min, max, neg }, current, step, inverse = false) {
   // If the step is zero, return the current position without changing it.

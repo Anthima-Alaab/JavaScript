@@ -1,5 +1,6 @@
 /** @typedef {import('../options.js').Line} Line */
 /** @typedef {import('../options.js').LineOptions} LineOptions */
+/** @typedef {import("../imports.js").Point} Point */
 
 /**
  * @param {LineOptions} options
@@ -73,14 +74,14 @@ export function one({ dis, end, neg = false, count, spacing }) {
 
 /**
  * Calculates the positions of all points on a line, optionally adjusting for an spacing.
- * @param {number} count The count of points.
- * @param {number} [spacing] The spacing to apply to each point's position. @defaultValue 1
+ * @param {Point} count The count of points.
+ * @param {Point} [spacing] The spacing to apply to each point's position. @defaultValue 1
  * @param {'zero' | 'negative' | 'positive'} [sort='zero'] The alignment of the points. @defaultValue 'zero'
- * @returns {number[]} An array of positions for each point on the line.
+ * @returns {Point[]} An array of positions for each point on the line.
  */
 export function points(count, spacing = 1, sort = 'zero') {
   // Initialize an array to hold the calculated positions for each point.
-  /** @type {number[]} */
+  /** @type {Point[]} */
   const points = new Array(count)
   // Determine if the total number of points is even.
   const isEven = count % 2 === 0
