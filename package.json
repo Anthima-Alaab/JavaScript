@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "types": "workspace ./workspace.json -t",
-    "docs": "workspace ./workspace.json -t -d",
+    "types": "tsc -p ./tsconfig.json && node ./cli/clean.js",
+    "docs": "npm run types && node ./cli/docs.js",
     "lint": "eslint . --fix --ignore-path .gitignore",
     "format": "prettier . --write --ignore-path .gitignore",
     "test": "mocha ./tests/**/*.test.js"
@@ -44,12 +44,16 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@disqada/workspace": "^1.5.1",
+    "@mxssfd/typedoc-theme": "^1.1.6",
     "@types/node": "*",
-    "prettier": "*",
     "eslint": "*",
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-mocha": "^10.3.0",
-    "mocha": "^10.3.0"
+    "mocha": "^10.3.0",
+    "prettier": "*",
+    "typedoc": "^0.26.4",
+    "typedoc-plugin-extras": "^3.1.0",
+    "typedoc-plugin-missing-exports": "^3.0.0",
+    "typescript": "^5.5.3"
   }
 }

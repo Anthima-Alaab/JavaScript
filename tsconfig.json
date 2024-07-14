@@ -1,0 +1,23 @@
+{
+  "include": ["./src/"],
+  "exclude": ["**/node_modules/**/*"],
+  "compilerOptions": {
+    "noEmitOnError": false,
+
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "rootDir": "./src/",
+    "declarationDir": "./types/",
+
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleDetection": "auto",
+    "moduleResolution": "NodeNext"
+  }
+}

@@ -20,6 +20,20 @@
   },
   "overrides": [
     {
+      "files": ["cli/**/*"],
+      "env": {
+        "es6": true,
+        "node": true
+      },
+      "rules": {
+        "no-console": "off",
+        "jsdoc/no-defaults": "off",
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-property-description": "off",
+        "jsdoc/require-returns-description": "off"
+      }
+    },
+    {
       "files": ["{test,tests}/**/*"],
       "env": {
         "mocha": true,
