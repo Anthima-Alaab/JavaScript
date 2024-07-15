@@ -40,15 +40,7 @@
     "CHANGELOG.md",
     "{LICENSE,LICENSE.*}"
   ],
-  "todo-tree.general.tags": [
-    "LOCK",
-    "BUG",
-    "FIX",
-    "TODO",
-    "BOOKMARK",
-    "NOTE",
-    "///"
-  ],
+  "todo-tree.general.tags": ["LOCK", "BUG", "FIX", "TODO", "BOOKMARK", "NOTE", "///"],
   "todo-tree.general.tagGroups": {
     "FIX": ["FIXME", "FIXIT"]
   },

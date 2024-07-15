@@ -26,12 +26,9 @@
  */
 export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
   // التحقق من القيم المقدمة
-  if (!Number.isNaN(dis) && dis < 0)
-    throw new Error('يجب أن تكون المسافة موجباً')
-  if (!Number.isNaN(spacing) && spacing < 0)
-    throw new Error('يجب أن يكون التباعد موجباً')
-  if (!Number.isNaN(count) && count < 2)
-    throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
+  if (!Number.isNaN(dis) && dis < 0) throw new Error('يجب أن تكون المسافة موجباً')
+  if (!Number.isNaN(spacing) && spacing < 0) throw new Error('يجب أن يكون التباعد موجباً')
+  if (!Number.isNaN(count) && count < 2) throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
 
   // تهيئة كائن المستقيم
   const l = {}
@@ -39,13 +36,7 @@ export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
   l.neg = end !== undefined ? end < 0 : neg
   l.count = count !== undefined ? count : spacing ? dis / spacing + 1 : 2
   l.dis =
-    end !== undefined
-      ? Math.abs(end)
-      : dis !== undefined
-      ? dis
-      : spacing !== undefined
-      ? spacing * (l.count - 1)
-      : 1
+    end !== undefined ? Math.abs(end) : dis !== undefined ? dis : spacing !== undefined ? spacing * (l.count - 1) : 1
 
   // تعريف الخصائص المحسوبة
   Object.defineProperties(l, {
@@ -71,10 +62,7 @@ export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
     },
     points: {
       get() {
-        return Array.from(
-          { length: this.count },
-          (_, i) => this.spacing * i * (this.neg ? -1 : 1)
-        )
+        return Array.from({ length: this.count }, (_, i) => this.spacing * i * (this.neg ? -1 : 1))
       }
     }
   })

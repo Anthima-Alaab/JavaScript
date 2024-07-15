@@ -7,13 +7,7 @@ describe('1: قراءة مسارات المجلدات', function () {
     const paths = await readFolder('cli')
     deepStrictEqual(
       paths,
-      [
-        'clean.js',
-        'docs.js',
-        'func/clean.js',
-        'func/read.js',
-        'func/write.js'
-      ].map((subPath) =>
+      ['clean.js', 'docs.js', 'func/clean.js', 'func/read.js', 'func/write.js'].map((subPath) =>
         (process.cwd() + '/cli/' + subPath).replace(/\//g, sep)
       )
     )
@@ -58,15 +52,9 @@ describe('2: قراءة محتويات الملفات', function () {
   })
 
   it('2.6: إعادة المسار والنوع الصحيحين مع tuple', function () {
-    let a = readImport(
-      '@param {[import("./file").string, import("./file").number]} str'
-    )
+    let a = readImport('@param {[import("./file").string, import("./file").number]} str')
 
-    deepStrictEqual(a, [
-      '@param {[string, import("./file").number]} str',
-      './file',
-      'string'
-    ])
+    deepStrictEqual(a, ['@param {[string, import("./file").number]} str', './file', 'string'])
 
     a = readImport(a[0])
     deepStrictEqual(a, ['@param {[string, number]} str', './file', 'number'])
@@ -83,44 +71,26 @@ describe('2: قراءة محتويات الملفات', function () {
   })
 
   it('2.9: إعادة المسار والنوع الصحيحين مع Map', function () {
-    let a = readImport(
-      '@param {Map<import("./file").string, import("./file").number>} str'
-    )
+    let a = readImport('@param {Map<import("./file").string, import("./file").number>} str')
 
-    deepStrictEqual(a, [
-      '@param {Map<string, import("./file").number>} str',
-      './file',
-      'string'
-    ])
+    deepStrictEqual(a, ['@param {Map<string, import("./file").number>} str', './file', 'string'])
 
     a = readImport(a[0])
     deepStrictEqual(a, ['@param {Map<string, number>} str', './file', 'number'])
   })
 
   it('2.10: إعادة المسار والنوع الصحيحين مع نفس المسار استيرادات متعددة', function () {
-    let a = readImport(
-      '@param {import("./file").string|import("./file").number} str'
-    )
+    let a = readImport('@param {import("./file").string|import("./file").number} str')
 
-    deepStrictEqual(a, [
-      '@param {string|import("./file").number} str',
-      './file',
-      'string'
-    ])
+    deepStrictEqual(a, ['@param {string|import("./file").number} str', './file', 'string'])
 
     a = readImport(a[0])
     deepStrictEqual(a, ['@param {string|number} str', './file', 'number'])
   })
 
   it('2.11: إعادة المسار والنوع الصحيحين مع مسارات مختلفة استيرادات متعددة', function () {
-    let a = readImport(
-      '@param {import("./file1").string|import("./file2").number} str'
-    )
-    deepStrictEqual(a, [
-      '@param {string|import("./file2").number} str',
-      './file1',
-      'string'
-    ])
+    let a = readImport('@param {import("./file1").string|import("./file2").number} str')
+    deepStrictEqual(a, ['@param {string|import("./file2").number} str', './file1', 'string'])
 
     a = readImport(a[0])
     deepStrictEqual(a, ['@param {string|number} str', './file2', 'number'])
@@ -128,11 +98,7 @@ describe('2: قراءة محتويات الملفات', function () {
 
   it('2.12: إعادة المسار والنوع الصحيحين مع استيرادات كاملة', function () {
     const a = readImport('export type string = typeof import("./file");')
-    deepStrictEqual(a, [
-      'export type string = typeof import("./file");',
-      null,
-      null
-    ])
+    deepStrictEqual(a, ['export type string = typeof import("./file");', null, null])
   })
 })
 

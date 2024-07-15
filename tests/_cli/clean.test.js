@@ -28,18 +28,12 @@ describe('1: تنظيف الأسطر', function () {
   })
 
   it('1.6: تحويل نوع التصدير إلى إعلان نوع التصدير', function () {
-    const a = cleanFile(
-      'export type example = typeof import("./file/path.js");'
-    )
-    strictEqual(
-      a,
-      'export declare type example = typeof import("./file/path.js");'
-    )
+    const a = cleanFile('export type example = typeof import("./file/path.js");')
+    strictEqual(a, 'export declare type example = typeof import("./file/path.js");')
   })
 
   it('1.7: تحويل دالة التصدير إلى دالة إعلان التصدير', function () {
-    const a =
-      cleanFile(`export function (...args: example[][], ...args2: example[example][], ...args3: example[][][]) :
+    const a = cleanFile(`export function (...args: example[][], ...args2: example[example][], ...args3: example[][][]) :
     | Promise<import("file/path.js").example | void>
     | example
     | void { }`)

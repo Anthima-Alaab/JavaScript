@@ -19,10 +19,7 @@ describe('1: تحويل خريطة الأنواع إلى واردات', function
         ['./file2', ['number']]
       ])
     )
-    equal(
-      a,
-      'import type { string } from "./file1";\nimport type { number } from "./file2";\n'
-    )
+    equal(a, 'import type { string } from "./file1";\nimport type { number } from "./file2";\n')
   })
 })
 
