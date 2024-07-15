@@ -2,18 +2,26 @@
 /** @typedef {import("../imports.js").Point} Point */
 
 /**
- * تحويل قيمة نقطة إلى نسبة مئوية على مستقيم
+ * تحويل قيمة نقطة إلى نسبة أحادية على مستقيم
  * @param {Line} line
  * @param {Point} point
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.to(line, 5)
+ * // t = 0.5
+ * @example
+ * const line = Line.create.one({ end: -10 })
+ * const t = Line.time.to(line, -5)
+ * // t = 0.5
  */
 export function to({ dis, neg, end }, point) {
   // إذا كانت النقطة عند البداية، إرجاع 0 إذا لم يكن سالباً، وإرجاع 1 إذا كان سالباً
   if (point === 0) return neg ? 1 : 0
   // إذا كانت النقطة عند النهاية، إرجاع 1 إذا لم يكن سالباً، وإرجاع 0 إذا كان سالباً
   if (point === end) return neg ? 0 : 1
-  // حساب النسبة المئوية للنقطة على المستقيم
-  return (point / dis) * (neg ? -1 : 1)
+  // حساب النسبة الأحادية للنقطة على المستقيم
+  return neg ? -(point / dis) : point / dis
 }
 
 /**
@@ -21,13 +29,21 @@ export function to({ dis, neg, end }, point) {
  * @param {Line} line
  * @param {Point} point
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.to(line, 15)
+ * // t = 1
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.to.clamp(line, -5)
+ * // t = 0
  */
 to.clamp = function (line, point) {
   // إذا كانت النقطة أكبر من الحد الأقصى، إرجاع 1
   if (point >= line.max) return 1
   // إذا كانت النقطة أقل من الحد الأدنى، إرجاع 0
   if (point <= line.min) return 0
-  // حساب النسبة المئوية المقيدة للنقطة على المستقيم
+  // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
 
@@ -36,11 +52,15 @@ to.clamp = function (line, point) {
  * @param {Line} line
  * @param {Point} point
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.to.clamp.min(line, -5)
+ * // t = 0
  */
 to.clamp.min = function (line, point) {
   // إذا كانت النقطة أقل من الحد الأدنى، إرجاع 0
   if (point <= line.min) return 0
-  // حساب النسبة المئوية المقيدة للنقطة على المستقيم
+  // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
 
@@ -49,19 +69,31 @@ to.clamp.min = function (line, point) {
  * @param {Line} line
  * @param {Point} point
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.to.clamp.max(line, 15)
+ * // t = 1
  */
 to.clamp.max = function (line, point) {
   // إذا كانت النقطة أكبر من الحد الأقصى، إرجاع 1
   if (point >= line.max) return 1
-  // حساب النسبة المئوية المقيدة للنقطة على المستقيم
+  // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
 
 /**
- * تحويل نسبة مئوية إلى نقطة على المستقيم
+ * تحويل نسبة أحادية إلى نقطة على المستقيم
  * @param {Line} line
  * @param {Point} t بين 0 و 1، شامل ال1
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from(line, 0.5)
+ * // t = 5
+ * @example
+ * const line = Line.create.one({ end: -10 })
+ * const t = Line.time.from(line, 0.5)
+ * // t = -5
  */
 export function from(line, t) {
   // إذا كانت النسبة 1، إرجاع الحد الأقصى
@@ -70,49 +102,66 @@ export function from(line, t) {
   if (t === 0) return from.min(line)
 
   const { dis, neg } = line
+
   // حساب النقطة بناءً على النسبة المئوية
   if (neg) return -(dis - dis * t)
   else return dis * t
 }
 
 /**
- * تقييد النسبة المئوية بين 0 و 1
+ * تقييد النسبة الأحادية بين 0 و 1
  * @param {Line} line
  * @param {Point} t بين 0 و 1، شامل ال1
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.clamp(line, 1.5)
+ * // t = 10
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.clamp(line, -0.5)
+ * // t = 0
  */
 from.clamp = function (line, t) {
   // إذا كانت النسبة أكبر من أو تساوي 1، إرجاع الحد الأقصى
   if (t >= 1) return from.max(line)
   // إذا كانت النسبة أقل من أو تساوي 0، إرجاع الحد الأدنى
   if (t <= 0) return from.min(line)
-  // حساب النقطة بناءً على النسبة المئوية المقيدة
+  // حساب النقطة بناءً على النسبة الأحادية المقيدة
   return from(line, t)
 }
 
 /**
- * تقييد النسبة المئوية لتكون أقل من أو تساوي 1
+ * تقييد النسبة الأحادية لتكون أقل من أو تساوي 1
  * @param {Line} line
  * @param {Point} t بين 0 و 1، شامل ال1
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.clamp.max(line, 1.5)
+ * // t = 10
  */
 from.clamp.max = function (line, t) {
   // إذا كانت النسبة أكبر من أو تساوي 1، إرجاع الحد الأقصى
   if (t >= 1) return from.max(line)
-  // حساب النقطة بناءً على النسبة المئوية
+  // حساب النقطة بناءً على النسبة الأحادية
   return from(line, t)
 }
 
 /**
- * تقييد النسبة المئوية لتكون أكبر من أو تساوي 0
+ * تقييد النسبة الأحادية لتكون أكبر من أو تساوي 0
  * @param {Line} line
  * @param {Point} t بين 0 و 1، شامل ال1
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.clamp.min(line, -0.5)
+ * // t = 0
  */
 from.clamp.min = function (line, t) {
   // إذا كانت النسبة أقل من أو تساوي 0، إرجاع الحد الأدنى
   if (t <= 0) return from.min(line)
-  // حساب النقطة بناءً على النسبة المئوية
+  // حساب النقطة بناءً على النسبة الأحادية
   return from(line, t)
 }
 
@@ -120,6 +169,10 @@ from.clamp.min = function (line, t) {
  * إرجاع النقطة عند منتصف المستقيم
  * @param {Line} line
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.center(line)
+ * // t = 5
  */
 from.center = function (line) {
   return from(line, 0.5)
@@ -129,6 +182,10 @@ from.center = function (line) {
  * إرجاع الحد الأدنى للنقطة على المستقيم
  * @param {Line} line
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.min(line)
+ * // t = 0
  */
 from.min = function ({ dis, neg }) {
   // note: أسرع من استدعاء `from(line, 0)`
@@ -139,6 +196,10 @@ from.min = function ({ dis, neg }) {
  * إرجاع الحد الأقصى للنقطة على المستقيم
  * @param {Line} line
  * @returns {Point}
+ * @example
+ * const line = Line.create.one({ end: 10 })
+ * const t = Line.time.from.max(line)
+ * // t = 10
  */
 from.max = function ({ dis, neg }) {
   // note: أسرع من استدعاء `from(line, 1)`

@@ -7,6 +7,22 @@
  * إنشاء كائن مستقيم بناءً على الخيارات المقدمة
  * @param {LineOptions} options @defaultValue { dis: 1, end: 1, spacing: 1, count: 2, neg: false }
  * @returns {Line}
+ * @throws إذا كانت الخيارات غير صالحة
+ * @example
+ * const line = Line.create.one({ end: -10 })
+ * // line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+ * @example
+ * const line = Line.create.one({ end: -10, count: 3 })
+ * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * @example
+ * const line = Line.create.one({ dis: 10, neg: true })
+ * // line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+ * @example
+ * const line = Line.create.one({ dis: 10, count: 3, neg: true })
+ * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * @example
+ * const line = Line.create.one({ spacing: 5, count: 3, neg: true })
+ * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  */
 export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
   // التحقق من القيم المقدمة
@@ -71,6 +87,12 @@ export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
  * حساب مواضع جميع النقاط على الخط، مع ضبط اختياري للفواصل
  * @param {PointsOptions} options عدد النقاط @defaultValue { spacing: 1, count: 2, sort: zero }
  * @returns {Point[]} مصفوفة من المواضع لكل نقطة على المستقيم
+ * @throws إذا كان الخيار المقدم للترتيب غير صالح
+ * @example
+ * const points = Line.create.points({ count: 5, spacing: 2, sort: 'zero'})
+ * // points = [0, 2, -2, 4, -4] ('zero' sort)
+ * // points = [-4, -2, 0, 2, 4] ('neg' sort)
+ * // points = [4, 2, 0, -2, -4] ('pos' sort)
  */
 export function points({ count = 2, spacing = 1, sort = 'zero' }) {
   // تهيئة مصفوفة لتخزين المواضع المحسوبة لكل نقطة
