@@ -10,7 +10,7 @@ export {}
  * @property {Point} [spacing] - التباعد بين النقاط
  * @property {Point[]} [points] - النقاط المحددة على المستقيم
  * @property {number} [count] - عدد النقاط على المستقيم، يشمل النقطة الأولى والأخيرة
- * @property {boolean} [neg=false] - قيمة تخبر إذا كان المستقيم موجباً أم سالباً @default false
+ * @property {boolean} [neg] - قيمة تخبر إذا كان المستقيم موجباً أم سالباً
  */
 
 /**
