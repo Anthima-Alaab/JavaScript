@@ -1,7 +1,7 @@
 {
-  "displayName": "Anthima Alaab",
+  "displayName": "Anthima Alaab | أنظمة ألعاب",
   "name": "anthima",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "تطبيق أنظمة الألعاب بلغة جافاسكربت",
   "scripts": {
     "types": "tsc -p ./tsconfig.json && node ./cli/clean.js",
@@ -29,7 +29,7 @@
   "homepage": "https://Anthima-Alaab.github.io/JavaScript",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Anthima-Alaab/JavaScript.git"
+    "url": "git+https://github.com/Anthima-Alaab/JavaScript.git"
   },
   "bugs": {
     "url": "https://github.com/Anthima-Alaab/JavaScript/issues"
