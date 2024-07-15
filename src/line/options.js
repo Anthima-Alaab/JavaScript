@@ -3,6 +3,14 @@
 export {}
 
 /**
+ * خيارات إنشاء نقاط
+ * @typedef {object} PointsOptions
+ * @property {Point} [spacing] - التباعد بين النقاط
+ * @property {number} [count] - عدد النقاط على المستقيم، يشمل النقطة الأولى والأخيرة
+ * @property {'zero' | 'neg' | 'pos'} [sort] - ترتيب النقاط
+ */
+
+/**
  * خيارات إنشاء مستقيم
  * @typedef {object} LineOptions
  * @property {Point} [dis] - المسافة

@@ -1,42 +1,35 @@
 /** @typedef {import('../options.js').Line} Line */
 /** @typedef {import('../options.js').LineOptions} LineOptions */
+/** @typedef {import('../options.js').PointsOptions} PointsOptions */
 /** @typedef {import("../imports.js").Point} Point */
 
 /**
  * إنشاء كائن مستقيم بناءً على الخيارات المقدمة
- * @param {LineOptions} options
+ * @param {LineOptions} options @defaultValue { dis: 1, end: 1, spacing: 1, count: 2, neg: false }
  * @returns {Line}
  */
-export function one({ dis, end, neg = false, count, spacing }) {
+export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
   // التحقق من القيم المقدمة
-  if (dis !== undefined && dis < 0)
+  if (!Number.isNaN(dis) && dis < 0)
     throw new Error('يجب أن تكون المسافة موجباً')
-  if (spacing !== undefined && spacing < 0)
+  if (!Number.isNaN(spacing) && spacing < 0)
     throw new Error('يجب أن يكون التباعد موجباً')
-  if (count !== undefined && count < 2)
+  if (!Number.isNaN(count) && count < 2)
     throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
 
   // تهيئة كائن المستقيم
-  const l = { neg }
+  const l = {}
 
-  // حساب الخصائص بناءً على الخيارات المقدمة
-  if (spacing && count && !dis) {
-    l.dis = spacing * (count - 1)
-    l.count = count
-  } else if (dis && count && !spacing) {
-    l.dis = dis
-    l.count = count
-  } else if (dis && spacing && !count) {
-    l.dis = dis
-    l.count = dis / spacing + 1
-  } else if (end !== undefined) {
-    l.dis = Math.abs(end)
-    l.count = 2
-    l.neg = end < 0
-  } else if (dis) {
-    l.dis = dis
-    l.count = 2
-  } else throw new Error('الحالة غير مغطاة')
+  l.neg = end !== undefined ? end < 0 : neg
+  l.count = count !== undefined ? count : spacing ? dis / spacing + 1 : 2
+  l.dis =
+    end !== undefined
+      ? Math.abs(end)
+      : dis !== undefined
+      ? dis
+      : spacing !== undefined
+      ? spacing * (l.count - 1)
+      : 1
 
   // تعريف الخصائص المحسوبة
   Object.defineProperties(l, {
@@ -47,7 +40,7 @@ export function one({ dis, end, neg = false, count, spacing }) {
     },
     end: {
       get() {
-        return this.dis * (this.neg ? -1 : 1)
+        return this.neg ? -this.dis : this.dis
       }
     },
     min: {
@@ -76,12 +69,10 @@ export function one({ dis, end, neg = false, count, spacing }) {
 
 /**
  * حساب مواضع جميع النقاط على الخط، مع ضبط اختياري للفواصل
- * @param {Point} count عدد النقاط
- * @param {Point} [spacing=1] الفاصل المطبق على موضع كل نقطة. @default 1
- * @param {'zero' | 'negative' | 'positive'} [sort='zero'] ترتيب النقاط. @default 'zero'
+ * @param {PointsOptions} options عدد النقاط @defaultValue { spacing: 1, count: 2, sort: zero }
  * @returns {Point[]} مصفوفة من المواضع لكل نقطة على المستقيم
  */
-export function points(count, spacing = 1, sort = 'zero') {
+export function points({ count = 2, spacing = 1, sort = 'zero' }) {
   // تهيئة مصفوفة لتخزين المواضع المحسوبة لكل نقطة
   /** @type {Point[]} */
   const points = new Array(count)
@@ -102,7 +93,7 @@ export function points(count, spacing = 1, sort = 'zero') {
 
   // إرجاع المصفوفة التي تحتوي على جميع المواضع المحسوبة
   if (sort === 'zero') return points
-  if (sort === 'negative') return points.sort((a, b) => a - b)
-  if (sort === 'positive') return points.sort((a, b) => b - a)
+  if (sort === 'neg') return points.sort((a, b) => a - b)
+  if (sort === 'pos') return points.sort((a, b) => b - a)
   throw new Error('خيار ترتيب غير صالح')
 }
