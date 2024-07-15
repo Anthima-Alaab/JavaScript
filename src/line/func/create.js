@@ -24,7 +24,7 @@
  * const line = Line.create.one({ spacing: 5, count: 3, neg: true })
  * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  */
-export function one({ dis = 1, end = 1, spacing = 1, count = 2, neg = false }) {
+export function one({ dis, end, spacing, count, neg = false }) {
   // التحقق من القيم المقدمة
   if (!Number.isNaN(dis) && dis < 0) throw new Error('يجب أن تكون المسافة موجباً')
   if (!Number.isNaN(spacing) && spacing < 0) throw new Error('يجب أن يكون التباعد موجباً')
