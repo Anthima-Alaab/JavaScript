@@ -1,20 +1,22 @@
 #!/usr/bin/env node
 
-import { writeFile } from 'fs/promises'
+import { stat, writeFile } from 'fs/promises'
 import { cleanFolder } from './func/clean.js'
-import { statSync } from 'fs'
 import { join } from 'path'
 
+// تحديد مسار مجلد types
 const typesPath = join(process.cwd(), 'types')
-const stats = statSync(typesPath)
+// الحصول على معلومات حول المجلد المحدد
+const stats = await stat(typesPath)
 
-if (!stats || !stats.isDirectory()) {
-  console.error('No types folder found')
-  // return
-} else {
+// التحقق مما إذا كان المجلد موجودًا وهو مجلد فعلاً
+if (stats && stats.isDirectory()) {
+  // تنظيف المجلد والحصول على خريطة الملفات
   const fileMap = await cleanFolder(typesPath)
+
+  // كتابة البيانات الجديدة إلى الملفات
   for (const file of fileMap) {
     const [path, data] = file
     await writeFile(path, data, 'utf8')
   }
-}
+} else console.error('No types folder found') // طباعة رسالة خطأ إذا لم يتم العثور على المجلد

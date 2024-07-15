@@ -2,32 +2,32 @@
 /** @typedef {import("../imports.js").Point} Point */
 
 /**
- * Checks if a given point is inside the range defined by a Line object.
- * @param {Line} line - The Line object defining the range.
- * @param {Point} point - The point to check.
- * @returns {boolean} - Returns true if the point is inside the range, false otherwise.
+ * يتحقق ما إذا كانت النقطة داخل نقاط المستقيم
+ * @param {Line} line - المستقيم المراد التحقق عليه
+ * @param {Point} point - النقطة المراد التحقق منها
+ * @returns {boolean} - يعيد صحيح إذا كانت النقطة داخل المستقيم، خلاف ذلك يعيد خطأ
  */
 export function inside({ min, max }, point) {
-  // Check if the point is greater than or equal to min and less than or equal to max, then return true; otherwise, return false.
+  // أعد صحيح إذا كانت النقطة داخل النطاق
   return point >= min && point <= max
 }
 
 /**
- * Moves the current position by a specified step within the range defined by a Line object.
- * @param {Line} line - The Line object defining the range.
- * @param {Point} current - The current position.
- * @param {Point} step - The step to move by.
- * @param {boolean} [inverse=false] - Optional parameter to indicate if the movement should be in the opposite direction. @defaultValue false
- * @returns {Point} - Returns the new position after moving.
+ * يحرك النقطة على طول المستقيم
+ * @param {Line} line - المستقيم المراد التحرك عليه
+ * @param {Point} current - الموضع الحالي
+ * @param {Point} step - مقدار الخطوة الواحدة للتحرك بها
+ * @param {boolean} [inverse=false] - عكس إتجاه الحركة على المستقيم. @default false
+ * @returns {Point} - يعيد الموضع الجديد بعد التحرك
  */
 export function move({ min, max, neg }, current, step, inverse = false) {
-  // If the step is zero, return the current position without changing it.
+  // إذا كانت الخطوة تساوي صفرًا، أعد الموضع الحالي دون تغييره
   if (step === 0) return current
 
-  // Check if the inverse flag matches the neg property of the line. If they match, increase the current position by the step but do not exceed max.
-  // If they do not match, decrease the current position by the step but do not go below min.
-  // This effectively moves the position within the range, optionally in the inverse direction depending on the flags.
+  // تحقق مما إذا كان إتجاه الحركة معكوساً على مستقيم سالب.
+  // إذا تطابقت، زد الموضع الحالي بالخطوة ولكن لا تتجاوز القيمة القصوى
+  // إذا لم تتطابق، قلل الموضع الحالي بالخطوة ولكن لا تنزل تحت القيمة الدنيا
   return inverse === neg
-    ? Math.min(current + step, max) // If moving forward or both inverse and neg are true, add step to current but limit to max.
-    : Math.max(current - step, min) // If moving backward or both inverse and neg are false, subtract step from current but limit to min.
+    ? Math.min(current + step, max) // إذا كانت الحركة للأمام على مستقيم موجب أو للخلف على مستقيم سالب، تحرك خطوة بالموجب دون تجاوز القيمة القصوى
+    : Math.max(current - step, min) // إذا كانت الحركة للأمام على مستقيم سالب أو للخلف على مستقيم موجب، تحرك خطوة بالسالب دون تجاوز القيمة الدنيا
 }

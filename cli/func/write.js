@@ -1,20 +1,17 @@
 /**
- * convert an import data as a Map into a string of type imports
- * @param {Map<string, string[]>} imports imports data as <path, type[]>
- * @returns {string | void} the type imports string
+ * تحويل بيانات الواردات كخريطة إلى سلسلة نصية من الواردات النوعية
+ * @param {Map<string, string[]>} imports بيانات الواردات كخريطة <المسار، الأنواع[]>
+ * @returns {string | void} سلسلة نصية للواردات النوعية
  */
 export function writeImports(imports) {
-  if (imports.size === 0) {
-    return
-  }
+  // إذا كانت الخريطة فارغة، أعد لا شيء
+  if (imports.size === 0) return
 
-  let lines = ''
-  for (const iterator of imports) {
-    const path = iterator[0]
-    const types = iterator[1]
-
+  let lines = '' // سلسلة لتخزين الواردات النوعية
+  for (const [path, types] of imports) {
+    // إضافة الواردات النوعية إلى السلسلة
     lines += `import type { ${types.join(', ')} } from "${path}";\n`
   }
 
-  return lines
+  return lines // إرجاع السلسلة النهائية
 }

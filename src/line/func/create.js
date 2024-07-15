@@ -3,21 +3,23 @@
 /** @typedef {import("../imports.js").Point} Point */
 
 /**
+ * إنشاء كائن مستقيم بناءً على الخيارات المقدمة
  * @param {LineOptions} options
  * @returns {Line}
  */
 export function one({ dis, end, neg = false, count, spacing }) {
-  // Validation
-  if (dis !== undefined && dis < 0) throw new Error('dis must be positive')
+  // التحقق من القيم المقدمة
+  if (dis !== undefined && dis < 0)
+    throw new Error('يجب أن تكون المسافة موجباً')
   if (spacing !== undefined && spacing < 0)
-    throw new Error('spacing must be positive')
+    throw new Error('يجب أن يكون التباعد موجباً')
   if (count !== undefined && count < 2)
-    throw new Error('count must be equal or greater than 2')
+    throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
 
-  // Initialize line object
+  // تهيئة كائن المستقيم
   const l = { neg }
 
-  // Calculate properties based on provided options
+  // حساب الخصائص بناءً على الخيارات المقدمة
   if (spacing && count && !dis) {
     l.dis = spacing * (count - 1)
     l.count = count
@@ -34,9 +36,9 @@ export function one({ dis, end, neg = false, count, spacing }) {
   } else if (dis) {
     l.dis = dis
     l.count = 2
-  } else throw new Error('Case not implemented')
+  } else throw new Error('الحالة غير مغطاة')
 
-  // Define computed properties
+  // تعريف الخصائص المحسوبة
   Object.defineProperties(l, {
     spacing: {
       get() {
@@ -73,34 +75,34 @@ export function one({ dis, end, neg = false, count, spacing }) {
 }
 
 /**
- * Calculates the positions of all points on a line, optionally adjusting for an spacing.
- * @param {Point} count The count of points.
- * @param {Point} [spacing] The spacing to apply to each point's position. @defaultValue 1
- * @param {'zero' | 'negative' | 'positive'} [sort='zero'] The alignment of the points. @defaultValue 'zero'
- * @returns {Point[]} An array of positions for each point on the line.
+ * حساب مواضع جميع النقاط على الخط، مع ضبط اختياري للفواصل
+ * @param {Point} count عدد النقاط
+ * @param {Point} [spacing=1] الفاصل المطبق على موضع كل نقطة. @default 1
+ * @param {'zero' | 'negative' | 'positive'} [sort='zero'] ترتيب النقاط. @default 'zero'
+ * @returns {Point[]} مصفوفة من المواضع لكل نقطة على المستقيم
  */
 export function points(count, spacing = 1, sort = 'zero') {
-  // Initialize an array to hold the calculated positions for each point.
+  // تهيئة مصفوفة لتخزين المواضع المحسوبة لكل نقطة
   /** @type {Point[]} */
   const points = new Array(count)
-  // Determine if the total number of points is even.
+  // تحديد ما إذا كان العدد الكلي للنقاط زوجياً
   const isEven = count % 2 === 0
   if (!isEven) points[0] = 0
 
   let j = isEven ? 0 : 1
   const halfSpacing = isEven ? spacing * 0.5 : 0
-  // Iterate over each point to calculate its position.
+  // التكرار على كل نقطة لحساب موضعها
   for (let i = j; i < count; i += 2) {
-    // Calculate the position of the current point and assign it to the array.
+    // حساب موضع النقطة الحالية وتعيينها في المصفوفة
     points[i] = spacing * j + halfSpacing
     points[i + 1] = spacing * -j - halfSpacing
 
     j++
   }
 
-  // Return the array containing all calculated positions.
+  // إرجاع المصفوفة التي تحتوي على جميع المواضع المحسوبة
   if (sort === 'zero') return points
   if (sort === 'negative') return points.sort((a, b) => a - b)
   if (sort === 'positive') return points.sort((a, b) => b - a)
-  throw new Error('Invalid alignment option')
+  throw new Error('خيار ترتيب غير صالح')
 }
