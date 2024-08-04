@@ -5,8 +5,9 @@ describe('1: اصنع مستقيماً بالمسافة فقط', function () {
   it('1.1: موجب', function () {
     // 0 -2-> 2
 
-    const l = Line.create.one({ dis: 2 })
+    let l = Line.create.one({ dis: 2 })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 2,
       neg: false
@@ -16,13 +17,27 @@ describe('1: اصنع مستقيماً بالمسافة فقط', function () {
     deepStrictEqual(l.min, 0)
     deepStrictEqual(l.max, 2)
     deepStrictEqual(l.points, [0, 2])
+
+    // 1 -2-> 3
+
+    l.start = 1
+    deepStrictEqual(l, {
+      start: 1,
+      dis: 2,
+      count: 2,
+      neg: false
+    })
+    deepStrictEqual(l.spacing, 2)
+    deepStrictEqual(l.end, 3)
+    deepStrictEqual(l.points, [1, 3])
   })
 
   it('1.2: سلبي', function () {
     // -2 <-2- 0
 
-    const l = Line.create.one({ dis: 2, neg: true })
+    let l = Line.create.one({ dis: 2, neg: true })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 2,
       neg: true
@@ -31,14 +46,28 @@ describe('1: اصنع مستقيماً بالمسافة فقط', function () {
     deepStrictEqual(l.end, -2)
     deepStrictEqual(l.min, -2)
     deepStrictEqual(l.max, 0)
-    deepStrictEqual(l.points, [-0, -2])
+    deepStrictEqual(l.points, [0, -2])
+
+    // -1 <-2- 1
+
+    l.start = 1
+    deepStrictEqual(l, {
+      start: 1,
+      dis: 2,
+      count: 2,
+      neg: true
+    })
+    deepStrictEqual(l.spacing, 2)
+    deepStrictEqual(l.end, -1)
+    deepStrictEqual(l.points, [1, -1])
   })
 
   it('1.3: نهاية إيجابية', function () {
     // 0 -2-> 2
 
-    const l = Line.create.one({ end: 2 })
+    const l = Line.create.one({ start: 0, end: 2 })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 2,
       neg: false
@@ -53,8 +82,9 @@ describe('1: اصنع مستقيماً بالمسافة فقط', function () {
   it('1.4: نهاية سلبية', function () {
     // -2 <-2- 0
 
-    const l = Line.create.one({ end: -2 })
+    const l = Line.create.one({ start: 0, end: -2 })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 2,
       neg: true
@@ -63,41 +93,43 @@ describe('1: اصنع مستقيماً بالمسافة فقط', function () {
     deepStrictEqual(l.end, -2)
     deepStrictEqual(l.min, -2)
     deepStrictEqual(l.max, 0)
-    deepStrictEqual(l.points, [-0, -2])
+    deepStrictEqual(l.points, [0, -2])
   })
 })
 
 describe('2: اصنع مستقيماً بالمسافة والتباعد', function () {
   it('2.1: موجب', function () {
-    // 0 -1-> 1 -1-> 2
+    // 1 -1-> 2 -1-> 3
 
-    const l = Line.create.one({ dis: 2, spacing: 1 })
+    const l = Line.create.one({ start: 1, dis: 2, spacing: 1 })
     deepStrictEqual(l, {
+      start: 1,
       dis: 2,
       count: 3,
       neg: false
     })
     deepStrictEqual(l.spacing, 1)
-    deepStrictEqual(l.end, 2)
+    deepStrictEqual(l.end, 3)
     deepStrictEqual(l.min, 0)
     deepStrictEqual(l.max, 2)
-    deepStrictEqual(l.points, [0, 1, 2])
+    deepStrictEqual(l.points, [1, 2, 3])
   })
 
   it('2.2: سلبي', function () {
-    // -2 <-1- -1 <-1- 0
+    // -3 <-1- -2 <-1- -1
 
-    const l = Line.create.one({ dis: 2, spacing: 1, neg: true })
+    const l = Line.create.one({ start: -1, dis: 2, spacing: 1, neg: true })
     deepStrictEqual(l, {
+      start: -1,
       dis: 2,
       count: 3,
       neg: true
     })
     deepStrictEqual(l.spacing, 1)
-    deepStrictEqual(l.end, -2)
+    deepStrictEqual(l.end, -3)
     deepStrictEqual(l.min, -2)
     deepStrictEqual(l.max, 0)
-    deepStrictEqual(l.points, [-0, -1, -2])
+    deepStrictEqual(l.points, [-1, -2, -3])
   })
 })
 
@@ -107,6 +139,7 @@ describe('3: اصنع مستقيماً بالمسافة والعدد', function 
 
     const l = Line.create.one({ dis: 2, count: 3 })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 3,
       neg: false
@@ -123,6 +156,7 @@ describe('3: اصنع مستقيماً بالمسافة والعدد', function 
 
     const l = Line.create.one({ dis: 2, count: 3, neg: true })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 3,
       neg: true
@@ -131,7 +165,7 @@ describe('3: اصنع مستقيماً بالمسافة والعدد', function 
     deepStrictEqual(l.end, -2)
     deepStrictEqual(l.min, -2)
     deepStrictEqual(l.max, 0)
-    deepStrictEqual(l.points, [-0, -1, -2])
+    deepStrictEqual(l.points, [0, -1, -2])
   })
 })
 
@@ -141,6 +175,7 @@ describe('4: اصنع مستقيماً بالتباعد والعدد', function 
 
     const l = Line.create.one({ spacing: 1, count: 3 })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 3,
       neg: false
@@ -157,6 +192,7 @@ describe('4: اصنع مستقيماً بالتباعد والعدد', function 
 
     const l = Line.create.one({ spacing: 1, count: 3, neg: true })
     deepStrictEqual(l, {
+      start: 0,
       dis: 2,
       count: 3,
       neg: true
@@ -165,7 +201,7 @@ describe('4: اصنع مستقيماً بالتباعد والعدد', function 
     deepStrictEqual(l.end, -2)
     deepStrictEqual(l.min, -2)
     deepStrictEqual(l.max, 0)
-    deepStrictEqual(l.points, [-0, -1, -2])
+    deepStrictEqual(l.points, [0, -1, -2])
   })
 })
 

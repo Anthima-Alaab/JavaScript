@@ -9,22 +9,22 @@
  * @returns {Line}
  * @throws إذا كانت الخيارات غير صالحة
  * @example
- * const line = Line.create.one({ end: -10 })
- * // line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+ * const line = Line.create.one({ start: 0, end: -10 })
+ * // line = { neg: true, start: 0, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
  * @example
- * const line = Line.create.one({ end: -10, count: 3 })
- * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * const line = Line.create.one({ start: 0, end: -10, count: 3 })
+ * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  * @example
- * const line = Line.create.one({ dis: 10, neg: true })
- * // line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+ * const line = Line.create.one({ start: 0, dis: 10, neg: true })
+ * // line = { neg: true, start: 0, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
  * @example
- * const line = Line.create.one({ dis: 10, count: 3, neg: true })
- * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * const line = Line.create.one({ start: 0, dis: 10, count: 3, neg: true })
+ * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  * @example
- * const line = Line.create.one({ spacing: 5, count: 3, neg: true })
- * // line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * const line = Line.create.one({ start: 0, spacing: 5, count: 3, neg: true })
+ * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  */
-export function one({ dis, end, spacing, count, neg = false }) {
+export function one({ dis, end, spacing, count, start = 0, neg = false }) {
   // التحقق من القيم المقدمة
   if (!Number.isNaN(dis) && dis < 0) throw new Error('يجب أن تكون المسافة موجباً')
   if (!Number.isNaN(spacing) && spacing < 0) throw new Error('يجب أن يكون التباعد موجباً')
@@ -33,10 +33,20 @@ export function one({ dis, end, spacing, count, neg = false }) {
   // تهيئة كائن المستقيم
   const l = {}
 
-  l.neg = end !== undefined ? end < 0 : neg
+  l.start = start
+  l.neg = end !== undefined ? end < l.start : neg
   l.count = count !== undefined ? count : spacing ? dis / spacing + 1 : 2
   l.dis =
-    end !== undefined ? Math.abs(end) : dis !== undefined ? dis : spacing !== undefined ? spacing * (l.count - 1) : 1
+    end !== undefined
+      ? // ? Math.abs(l.start - end)
+        l.neg
+        ? l.start - end
+        : end - l.start
+      : dis !== undefined
+      ? dis
+      : spacing !== undefined
+      ? spacing * (l.count - 1)
+      : 1
 
   // تعريف الخصائص المحسوبة
   Object.defineProperties(l, {
@@ -47,7 +57,7 @@ export function one({ dis, end, spacing, count, neg = false }) {
     },
     end: {
       get() {
-        return this.neg ? -this.dis : this.dis
+        return this.neg ? this.start - this.dis : this.start + this.dis
       }
     },
     min: {
@@ -62,7 +72,7 @@ export function one({ dis, end, spacing, count, neg = false }) {
     },
     points: {
       get() {
-        return Array.from({ length: this.count }, (_, i) => this.spacing * i * (this.neg ? -1 : 1))
+        return Array.from({ length: this.count }, (_, i) => this.start + this.spacing * i * (this.neg ? -1 : 1))
       }
     }
   })

@@ -101,11 +101,11 @@ export function from(line, t) {
   // إذا كانت النسبة 0، إرجاع الحد الأدنى
   if (t === 0) return from.min(line)
 
-  const { dis, neg } = line
+  const { start, dis, neg } = line
 
   // حساب النقطة بناءً على النسبة المئوية
-  if (neg) return -(dis - dis * t)
-  else return dis * t
+  if (neg) return start - (dis - dis * t)
+  else return start + dis * t
 }
 
 /**
@@ -187,9 +187,9 @@ from.center = function (line) {
  * const t = Line.time.from.min(line)
  * // t = 0
  */
-from.min = function ({ dis, neg }) {
+from.min = function ({ start, dis, neg }) {
   // note: أسرع من استدعاء `from(line, 0)`
-  return neg ? -dis : 0
+  return neg ? start - dis : start
 }
 
 /**
@@ -201,7 +201,7 @@ from.min = function ({ dis, neg }) {
  * const t = Line.time.from.max(line)
  * // t = 10
  */
-from.max = function ({ dis, neg }) {
+from.max = function ({ start, dis, neg }) {
   // note: أسرع من استدعاء `from(line, 1)`
-  return neg ? 0 : dis
+  return neg ? start : start + dis
 }

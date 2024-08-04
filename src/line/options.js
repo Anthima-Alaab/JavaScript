@@ -13,6 +13,7 @@ export {}
 /**
  * خيارات إنشاء مستقيم
  * @typedef {object} LineOptions
+ * @property {Point} [start] - نقطة البداية
  * @property {Point} [dis] - المسافة
  * @property {Point} [end] - نقطة النهاية
  * @property {Point} [spacing] - التباعد بين النقاط
@@ -24,6 +25,7 @@ export {}
 /**
  * كائن يمثل مستقيماً
  * @typedef {object} Line
+ * @property {Point} start - نقطة البداية
  * @property {Point} dis - المسافة
  * @property {Point} spacing - التباعد بين النقاط
  * @property {number} count - عدد النقاط على المستقيم، يشمل النقطة الأولى والأخيرة
