@@ -9,6 +9,9 @@
  * @returns {Line}
  * @throws إذا كانت الخيارات غير صالحة
  * @example
+ * const line = Line.create.one({ points: [0, -5, -10] })
+ * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * @example
  * const line = Line.create.one({ start: 0, end: -10 })
  * // line = { neg: true, start: 0, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
  * @example
@@ -24,7 +27,7 @@
  * const line = Line.create.one({ start: 0, spacing: 5, count: 3, neg: true })
  * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  */
-export function one({ dis, end, spacing, count, start = 0, neg = false }) {
+export function one({ points, dis, end, spacing, count, start = 0, neg = false }) {
   // التحقق من القيم المقدمة
   if (!Number.isNaN(dis) && dis < 0) throw new Error('يجب أن تكون المسافة موجباً')
   if (!Number.isNaN(spacing) && spacing < 0) throw new Error('يجب أن يكون التباعد موجباً')
@@ -33,20 +36,29 @@ export function one({ dis, end, spacing, count, start = 0, neg = false }) {
   // تهيئة كائن المستقيم
   const l = {}
 
-  l.start = start
-  l.neg = end !== undefined ? end < l.start : neg
-  l.count = count !== undefined ? count : spacing ? dis / spacing + 1 : 2
-  l.dis =
-    end !== undefined
-      ? // ? Math.abs(l.start - end)
-        l.neg
-        ? l.start - end
-        : end - l.start
-      : dis !== undefined
-      ? dis
-      : spacing !== undefined
-      ? spacing * (l.count - 1)
-      : 1
+  if (points !== undefined) {
+    const end = points[points.length - 1]
+
+    l.start = points[0]
+    l.count = points.length
+    l.neg = end < l.start
+    l.dis = l.neg ? l.start - end : end - l.start
+  } else {
+    l.start = start
+    l.neg = end !== undefined ? end < l.start : neg
+    l.count = count !== undefined ? count : spacing ? dis / spacing + 1 : 2
+    l.dis =
+      end !== undefined
+        ? // ? Math.abs(l.start - end)
+          l.neg
+          ? l.start - end
+          : end - l.start
+        : dis !== undefined
+        ? dis
+        : spacing !== undefined
+        ? spacing * (l.count - 1)
+        : 1
+  }
 
   // تعريف الخصائص المحسوبة
   Object.defineProperties(l, {
