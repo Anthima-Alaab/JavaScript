@@ -66,11 +66,20 @@ export function one({ points, end, dis, spacing, start = 0, count = 2, neg = fal
     spacing: {
       get() {
         return this.dis / (this.count - 1)
+      },
+      set(value) {
+        this.dis = value * (this.count - 1)
+        this.count = this.dis / value + 1
       }
     },
     end: {
       get() {
         return this.neg ? this.start - this.dis : this.start + this.dis
+      },
+      set(value) {
+        this.neg = value < this.start
+        // this.dis = Math.abs(this.start - value)
+        this.dis = this.neg ? this.start - value : value - this.start
       }
     },
     min: {
