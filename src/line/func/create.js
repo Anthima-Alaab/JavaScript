@@ -5,27 +5,27 @@
 
 /**
  * إنشاء كائن مستقيم بناءً على الخيارات المقدمة
- * @param {LineOptions} options @defaultValue { dis: 1, end: 1, spacing: 1, count: 2, neg: false }
+ * @param {LineOptions} options @defaultValue { dis: 1, count: 2, neg: false }
  * @returns {Line}
  * @throws إذا كانت الخيارات غير صالحة
  * @example
- * const line = Line.create.one({ points: [0, -5, -10] })
- * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * const line = Line.create.one({})
+ * // line = { neg: false, start: 0, dis: 1, spacing: 1, count: 2, end: 1, min: 0, max: 1, points: [0, 1] }
  * @example
- * const line = Line.create.one({ start: 0, end: -10 })
- * // line = { neg: true, start: 0, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+ * const line = Line.create.one({ points: [0, -5, -10] })
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, end: -10, count: 3 })
- * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
- * @example
- * const line = Line.create.one({ start: 0, dis: 10, neg: true })
- * // line = { neg: true, start: 0, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, dis: 10, count: 3, neg: true })
- * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, spacing: 5, count: 3, neg: true })
- * // line = { neg: true, start: 0, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * @example
+ * const line = Line.create.one({ start: 0, spacing: 5, dis: 10, neg: true })
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  */
 export function one({ points, dis, end, spacing, count, start = 0, neg = false }) {
   // التحقق من القيم المقدمة
@@ -34,6 +34,7 @@ export function one({ points, dis, end, spacing, count, start = 0, neg = false }
   if (!Number.isNaN(count) && count < 2) throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
 
   // تهيئة كائن المستقيم
+  /** @type {Line} */
   const l = {}
 
   if (points !== undefined) {

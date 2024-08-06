@@ -7,9 +7,7 @@ export {}
 
 /**
  * خيارات لإنشاء نقطة ثنائية الأبعاد
- * @typedef {object} Point2Options
- * @property {number} [x] - الإحداثي السيني (X) للنقطة
- * @property {number} [y] - الإحداثي الصادي (Y) للنقطة
+ * @typedef {Partial<Point2>} Point2Options
  */
 
 /**
@@ -21,10 +19,7 @@ export {}
 
 /**
  * خيارات لإنشاء نقطة ثلاثية الأبعاد
- * @typedef {object} Point3Options
- * @property {number} [x] - الإحداثي السيني (X) للنقطة
- * @property {number} [y] - الإحداثي الصادي (Y) للنقطة
- * @property {number} [z] - الإحداثي العيني (Z) للنقطة
+ * @typedef {Partial<Point3>} Point3Options
  */
 
 /**

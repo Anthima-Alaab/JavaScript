@@ -4,6 +4,14 @@ export {}
 
 /**
  * خيارات إنشاء نقاط
+ *
+ * يمكن إنشاء المستقيم بإحدى الطرق التالية:
+ * - لا شيء
+ * - start, end, count
+ * - start, neg, dis, count
+ * - start, neg, spacing, count
+ * - start, neg, spacing, dis
+ * - points
  * @typedef {object} PointsOptions
  * @property {Point} [spacing] - التباعد بين النقاط
  * @property {number} [count] - عدد النقاط على المستقيم، يشمل النقطة الأولى والأخيرة
@@ -14,12 +22,12 @@ export {}
  * خيارات إنشاء مستقيم
  * @typedef {object} LineOptions
  * @property {Point} [start] - نقطة البداية
- * @property {Point} [dis] - المسافة
  * @property {Point} [end] - نقطة النهاية
+ * @property {Point} [dis] - المسافة
  * @property {Point} [spacing] - التباعد بين النقاط
- * @property {Point[]} [points] - النقاط المحددة على المستقيم
  * @property {number} [count] - عدد النقاط على المستقيم، يشمل النقطة الأولى والأخيرة
  * @property {boolean} [neg] - قيمة تخبر إذا كان المستقيم موجباً أم سالباً
+ * @property {Point[]} [points] - النقاط المحددة على المستقيم
  */
 
 /**
