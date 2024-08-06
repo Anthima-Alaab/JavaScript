@@ -1,1 +1,1 @@
-export * from '../point/exports.js'
+export * as Point from '../point/exports.js'

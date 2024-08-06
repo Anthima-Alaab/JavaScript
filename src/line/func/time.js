@@ -1,5 +1,5 @@
 /** @typedef {import('../options.js').Line} Line */
-/** @typedef {import("../imports.js").Point} Point */
+/** @typedef {import("../imports.js").Point.Point} Point */
 
 /**
  * تحويل قيمة نقطة إلى نسبة أحادية على مستقيم

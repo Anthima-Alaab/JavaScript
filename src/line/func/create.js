@@ -1,7 +1,7 @@
 /** @typedef {import('../options.js').Line} Line */
 /** @typedef {import('../options.js').LineOptions} LineOptions */
 /** @typedef {import('../options.js').PointsOptions} PointsOptions */
-/** @typedef {import("../imports.js").Point} Point */
+/** @typedef {import("../imports.js").Point.Point} Point */
 
 /**
  * إنشاء كائن مستقيم بناءً على الخيارات المقدمة
