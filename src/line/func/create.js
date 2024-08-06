@@ -27,11 +27,11 @@
  * const line = Line.create.one({ start: 0, spacing: 5, dis: 10, neg: true })
  * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
  */
-export function one({ points, dis, end, spacing, count, start = 0, neg = false }) {
+export function one({ points, end, dis, spacing, start = 0, count = 2, neg = false }) {
   // التحقق من القيم المقدمة
-  if (!Number.isNaN(dis) && dis < 0) throw new Error('يجب أن تكون المسافة موجباً')
-  if (!Number.isNaN(spacing) && spacing < 0) throw new Error('يجب أن يكون التباعد موجباً')
-  if (!Number.isNaN(count) && count < 2) throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
+  if (dis < 0) throw new Error('يجب أن تكون المسافة موجباً')
+  if (spacing < 0) throw new Error('يجب أن يكون التباعد موجباً')
+  if (count < 2) throw new Error('يجب أن يكون عدد النقاط أكبر من أو يساوي 2')
 
   // تهيئة كائن المستقيم
   /** @type {Line} */
@@ -47,17 +47,17 @@ export function one({ points, dis, end, spacing, count, start = 0, neg = false }
   } else {
     l.start = start
     l.neg = end !== undefined ? end < l.start : neg
-    l.count = count !== undefined ? count : spacing ? dis / spacing + 1 : 2
+    l.count = spacing !== undefined && dis !== undefined ? dis / spacing + 1 : count
     l.dis =
       end !== undefined
         ? // ? Math.abs(l.start - end)
           l.neg
           ? l.start - end
           : end - l.start
-        : dis !== undefined
-        ? dis
         : spacing !== undefined
         ? spacing * (l.count - 1)
+        : dis !== undefined
+        ? dis
         : 1
   }
 
