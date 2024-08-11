@@ -3,7 +3,8 @@
   "env": {
     "es6": true,
     "node": false,
-    "browser": false
+    "browser": false,
+    "commonjs": false
   },
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -23,7 +24,9 @@
       "files": ["**/cli/**/*"],
       "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "browser": false,
+        "commonjs": false
       },
       "rules": {
         "no-console": "off",
@@ -36,14 +39,20 @@
     {
       "files": ["**/{test,tests}/**/*"],
       "env": {
-        "mocha": true,
         "es6": true,
-        "node": true
+        "mocha": true,
+        "node": false,
+        "browser": false,
+        "commonjs": false
       },
       "extends": ["eslint:recommended", "plugin:mocha/recommended"],
       "plugins": ["mocha"],
       "rules": {
-        "mocha/max-top-level-suites": "off"
+        "no-console": "off",
+        "jsdoc/require-jsdoc": "off",
+        "mocha/max-top-level-suites": "off",
+        "mocha/no-setup-in-describe": "off",
+        "mocha/no-exports": "off"
       }
     }
   ]
