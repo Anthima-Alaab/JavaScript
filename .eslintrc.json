@@ -20,7 +20,7 @@
   },
   "overrides": [
     {
-      "files": ["cli/**/*"],
+      "files": ["**/cli/**/*"],
       "env": {
         "es6": true,
         "node": true
@@ -34,7 +34,7 @@
       }
     },
     {
-      "files": ["{test,tests}/**/*"],
+      "files": ["**/{test,tests}/**/*"],
       "env": {
         "mocha": true,
         "es6": true,

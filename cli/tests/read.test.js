@@ -1,14 +1,15 @@
 import { deepStrictEqual, ok } from 'assert'
 import { isAbsolute, sep } from 'path'
-import { readFolder, readImport } from '../../cli/func/read.js'
+import { readFolder, readImport } from '../src/func/read.js'
 
 describe('1: قراءة مسارات المجلدات', function () {
   it('1.1: إعادة المسارات المتوقعة', async function () {
-    const paths = await readFolder('cli')
+    const paths = await readFolder('cli/src')
     deepStrictEqual(
       paths,
       ['clean.js', 'docs.js', 'func/clean.js', 'func/read.js', 'func/write.js'].map((subPath) =>
-        (process.cwd() + '/cli/' + subPath).replace(/\//g, sep)
+        // eslint-disable-next-line no-undef
+        (process.cwd() + '/cli/src/' + subPath).replace(/\//g, sep)
       )
     )
   })

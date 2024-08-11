@@ -1,5 +1,5 @@
 import { equal } from 'assert'
-import { writeImports } from '../../cli/func/write.js'
+import { writeImports } from '../src/func/write.js'
 
 describe('1: تحويل خريطة الأنواع إلى واردات', function () {
   it('1.1: قيمة واحدة', function () {

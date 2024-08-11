@@ -1,5 +1,5 @@
 import { strictEqual } from 'assert'
-import { cleanFile } from '../../cli/func/clean.js'
+import { cleanFile } from '../src/func/clean.js'
 
 describe('1: تنظيف الأسطر', function () {
   it('1.1: تحويل التصدير إلى التصدير الافتراضي', function () {
