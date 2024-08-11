@@ -170,4 +170,61 @@ export default function () {
       equal(a, 0)
     })
   })
+
+  describe('5: تحديث مواضع المستقيم', function () {
+    beforeEach(function () {
+      line = Line.create.one({ start: 0, end: 10 })
+    })
+
+    it('5.1: عكس مستقيم', function () {
+      // [0 -> 10] => [10 <- 0]
+
+      const a = Line.point.updatePos.flip(line)
+      equal(a.start, 10)
+      equal(a.end, 0)
+    })
+
+    it('5.2: تحديث موضع البداية فقط', function () {
+      // [0 -> 10] => [5 -> 10]
+
+      let a = Line.point.updatePos(line, 5, { type: 'by', target: 'start' })
+
+      equal(a.start, 5)
+      equal(a.end, 10)
+
+      // [5 -> 10] => [10 <- 20]
+
+      a = Line.point.updatePos(a, 20, { type: 'to', target: 'start' })
+      equal(a.start, 20)
+      equal(a.end, 10)
+    })
+
+    it('5.3: تحديث موضع النهاية فقط', function () {
+      // [0 -> 10] => [0 -> 15]
+
+      let a = Line.point.updatePos(line, 5, { type: 'by', target: 'end' })
+      equal(a.start, 0)
+      equal(a.end, 15)
+
+      // [0 -> 15] => [0 -> 20]
+
+      a = Line.point.updatePos(a, 20, { type: 'to', target: 'end' })
+      equal(a.start, 0)
+      equal(a.end, 20)
+    })
+
+    it('5.4: تحديث موضع البداية والنهاية معاً', function () {
+      // [0 -> 10] => [5 -> 15]
+
+      let a = Line.point.updatePos(line, 5, { type: 'by', target: 'both' })
+      equal(a.start, 5)
+      equal(a.end, 15)
+
+      // [5 -> 15] => [20 -> 20]
+
+      a = Line.point.updatePos(a, 20, { type: 'to', target: 'both' })
+      equal(a.start, 20)
+      equal(a.end, 20)
+    })
+  })
 }

@@ -3,6 +3,13 @@
 export {}
 
 /**
+ * خيارات تعيين الموضع
+ * @typedef {object} PosAssignOptions
+ * @property {'to' | 'by'} type - نوع تعيين الموضع
+ * @property {'start' | 'end' | 'both'} target - الهدف المراد تعيين موضعه
+ */
+
+/**
  * خيارات إنشاء نقاط
  *
  * يمكن إنشاء المستقيم بإحدى الطرق التالية:

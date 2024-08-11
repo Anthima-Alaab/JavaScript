@@ -1,4 +1,5 @@
 /** @typedef {import('../options.js').Line} Line */
+/** @typedef {import("../options.js").PosAssignOptions} PosAssignOptions */
 /** @typedef {import("../imports.js").Point.Point} Point */
 
 /**
@@ -56,4 +57,45 @@ export function move({ min, max, neg }, current, step, inverse = false) {
       Math.min(current + step, max)
     : // إذا كانت الحركة للأمام على مستقيم سالب أو للخلف على مستقيم موجب، تحرك خطوة بالسالب دون تجاوز القيمة الدنيا
       Math.max(current - step, min)
+}
+
+/**
+ * يقوم بتحديث موضع الخط بناءً على القيمة والخيارات المعطاة
+ * @param {Line} line - كائن الخط الذي سيتم تحديثه
+ * @param {Point} value - القيمة التي سيتم تحديث الخط بها
+ * @param {PosAssignOptions} options - الخيارات لتعيين الموضع
+ * @returns {Line} - كائن الخط المحدّث
+ */
+export function updatePos(line, value, { type = 'to', target = 'both' }) {
+  if (target === 'end') {
+    // تحديث موضع النهاية فقط للخط
+    line.end = type === 'to' ? value : line.end + value
+  } else if (target === 'start') {
+    // تحديث موضع البداية فقط للخط
+    const temp = line.end
+    line.start = type === 'to' ? value : line.start + value
+    line.end = temp
+  } else if (target === 'both') {
+    // تحديث موضعي البداية والنهاية للخط
+    if (type === 'by') line.start = line.start + value
+    else if (type === 'to') {
+      line.start = value
+      line.end = value
+    }
+  }
+
+  return line // إرجاع كائن الخط المحدّث
+}
+
+/**
+ * يقوم بعكس موضعي البداية والنهاية للخط
+ * @param {Line} line - كائن الخط الذي سيتم عكسه
+ * @returns {Line} - كائن الخط المعكوس
+ */
+updatePos.flip = function (line) {
+  const temp = line.start // تخزين موضع البداية مؤقتاً
+  updatePos(line, line.end, { type: 'to', target: 'start' }) // تعيين موضع البداية إلى موضع النهاية
+  updatePos(line, temp, { type: 'to', target: 'end' }) // تعيين موضع النهاية إلى موضع البداية الأصلي
+
+  return line // إرجاع كائن الخط المعكوس
 }
