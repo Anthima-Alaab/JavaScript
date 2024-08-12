@@ -19,8 +19,8 @@
 
 ## أمثلة الاستخدام
 ### التحقق من وجود نقطة داخل المستقيم
-```javascript
-import { Line } from './JavaScript-main/src/exports.js'
+```js
+import { Line } from 'anthima'
 
 const line = Line.create.one({ end: 10 });
 const pointInLine = inside(line, 5);
@@ -31,8 +31,8 @@ const pointInLine = inside(line, 15);
 ```
 
 ### تحريك النقطة على طول المستقيم
-```javascript
-import { Line } from './JavaScript-main/src/exports.js'
+```js
+import { Line } from 'anthima'
 
 const line = Line.create.one({ end: 10 });
 const newCurrent = ride(line, 3, 2);
@@ -43,8 +43,8 @@ const newCurrent = ride(line, 3, 2, true);
 ```
 
 ### إنشاء مستقيم مع نقاط محددة
-```javascript
-import { Line } from './JavaScript-main/src/exports.js'
+```js
+import { Line } from 'anthima'
 
 const line = Line.create.one({ end: -10 });
 // line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, points: [0, -10] }
@@ -54,8 +54,8 @@ const line = Line.create.one({ end: -10, count: 3 });
 ```
 
 ### حساب نسبة النقطة على المستقيم
-```javascript
-import { Line } from './JavaScript-main/src/exports.js'
+```js
+import { Line } from 'anthima'
 
 const line = Line.create.one({ end: 10 });
 const t = Line.time.to(line, 5);

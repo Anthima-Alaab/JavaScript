@@ -3,5 +3,5 @@
   "useGitignore": true,
   "language": "ar,en",
   "files": ["./{src,test,tests}/**/*", "**/*.md"],
-  "words": []
+  "words": ["anthima", "إتجاه"]
 }
