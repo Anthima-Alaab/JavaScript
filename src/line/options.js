@@ -1,5 +1,3 @@
-/** @typedef {import("./imports.js").Point.Point} Point */
-
 export {}
 
 /**
@@ -48,3 +46,5 @@ export {}
  * @property {boolean} neg - قيمة تخبر إذا كان المستقيم موجباً أم سالباً
  * @property {Readonly<Point[]>} points - النقاط المحددة على المستقيم
  */
+
+/** @typedef {number} Point */

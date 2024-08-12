@@ -1,6 +1,6 @@
 /** @typedef {import('../options.js').Line} Line */
+/** @typedef {import("../options.js").Point} Point */
 /** @typedef {import("../options.js").PosAssignOptions} PosAssignOptions */
-/** @typedef {import("../imports.js").Point.Point} Point */
 
 import { from } from './time.js'
 

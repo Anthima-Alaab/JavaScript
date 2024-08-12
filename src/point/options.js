@@ -1,11 +1,6 @@
 export {}
 
 /**
- * نقطة ممثلة برقم
- * @typedef {number} Point
- */
-
-/**
  * خيارات لإنشاء نقطة ثنائية الأبعاد
  * @typedef {Partial<Point2>} Point2Options
  */
