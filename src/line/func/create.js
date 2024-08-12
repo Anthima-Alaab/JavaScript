@@ -10,22 +10,22 @@
  * @throws إذا كانت الخيارات غير صالحة
  * @example
  * const line = Line.create.one({})
- * // line = { neg: false, start: 0, dis: 1, spacing: 1, count: 2, end: 1, min: 0, max: 1, points: [0, 1] }
+ * // line = { neg: false, start: 0, dis: 1, spacing: 1, count: 2, end: 1, points: [0, 1] }
  * @example
  * const line = Line.create.one({ points: [0, -5, -10] })
- * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, end: -10, count: 3 })
- * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, dis: 10, count: 3, neg: true })
- * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, spacing: 5, count: 3, neg: true })
- * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, points: [0, -5, -10] }
  * @example
  * const line = Line.create.one({ start: 0, spacing: 5, dis: 10, neg: true })
- * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+ * // line = { neg: true, start: 0, dis: 10, spacing: 5, count: 3, end: -10, points: [0, -5, -10] }
  */
 export function one({ points, end, dis, spacing, start = 0, count = 2, neg = false }) {
   // التحقق من القيم المقدمة
@@ -80,16 +80,6 @@ export function one({ points, end, dis, spacing, start = 0, count = 2, neg = fal
         this.neg = value < this.start
         // this.dis = Math.abs(this.start - value)
         this.dis = this.neg ? this.start - value : value - this.start
-      }
-    },
-    min: {
-      get() {
-        return this.neg ? -this.dis : 0
-      }
-    },
-    max: {
-      get() {
-        return this.neg ? 0 : this.dis
       }
     },
     points: {

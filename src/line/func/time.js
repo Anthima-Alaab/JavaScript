@@ -40,9 +40,9 @@ export function to({ dis, neg, end }, point) {
  */
 to.clamp = function (line, point) {
   // إذا كانت النقطة أكبر من الحد الأقصى، إرجاع 1
-  if (point >= line.max) return 1
+  if (point >= from.max(line)) return 1
   // إذا كانت النقطة أقل من الحد الأدنى، إرجاع 0
-  if (point <= line.min) return 0
+  if (point <= from.min(line)) return 0
   // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
@@ -59,7 +59,7 @@ to.clamp = function (line, point) {
  */
 to.clamp.min = function (line, point) {
   // إذا كانت النقطة أقل من الحد الأدنى، إرجاع 0
-  if (point <= line.min) return 0
+  if (point <= from.min(line)) return 0
   // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
@@ -76,7 +76,7 @@ to.clamp.min = function (line, point) {
  */
 to.clamp.max = function (line, point) {
   // إذا كانت النقطة أكبر من الحد الأقصى، إرجاع 1
-  if (point >= line.max) return 1
+  if (point >= from.max(line)) return 1
   // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }

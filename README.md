@@ -47,10 +47,10 @@ const newCurrent = ride(line, 3, 2, true);
 import { Line } from './JavaScript-main/src/exports.js'
 
 const line = Line.create.one({ end: -10 });
-// line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, min: -10, max: 0, points: [0, -10] }
+// line = { neg: true, count: 2, dis: 10, spacing: 10, end: -10, points: [0, -10] }
 
 const line = Line.create.one({ end: -10, count: 3 });
-// line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, min: -10, max: 0, points: [0, -5, -10] }
+// line = { neg: true, count: 3, dis: 10, spacing: 5, end: -10, points: [0, -5, -10] }
 ```
 
 ### حساب نسبة النقطة على المستقيم

@@ -46,7 +46,5 @@ export {}
  * @property {Point} spacing - التباعد بين النقاط
  * @property {number} count - عدد النقاط على المستقيم، يشمل النقطة الأولى والأخيرة
  * @property {boolean} neg - قيمة تخبر إذا كان المستقيم موجباً أم سالباً
- * @property {Readonly<Point>} min - النقطة على طرف المستقيم الأدنى
- * @property {Readonly<Point>} max - النقطة على طرف المستقيم الأقصى
  * @property {Readonly<Point[]>} points - النقاط المحددة على المستقيم
  */

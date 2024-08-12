@@ -32,8 +32,6 @@ export default function () {
       })
       deepEqual(l.spacing, 2)
       deepEqual(l.end, 2)
-      deepEqual(l.min, 0)
-      deepEqual(l.max, 2)
       deepEqual(l.points, [0, 2])
 
       // 1 -2-> 3
@@ -62,8 +60,6 @@ export default function () {
       })
       deepEqual(l.spacing, 2)
       deepEqual(l.end, -2)
-      deepEqual(l.min, -2)
-      deepEqual(l.max, 0)
       deepEqual(l.points, [0, -2])
 
       // -1 <-2- 1
@@ -92,8 +88,6 @@ export default function () {
       })
       deepEqual(l.spacing, 2)
       deepEqual(l.end, 2)
-      deepEqual(l.min, 0)
-      deepEqual(l.max, 2)
       deepEqual(l.points, [0, 2])
     })
 
@@ -109,8 +103,6 @@ export default function () {
       })
       deepEqual(l.spacing, 2)
       deepEqual(l.end, -2)
-      deepEqual(l.min, -2)
-      deepEqual(l.max, 0)
       deepEqual(l.points, [0, -2])
     })
   })
@@ -128,8 +120,6 @@ export default function () {
       })
       deepEqual(l.spacing, 1)
       deepEqual(l.end, 3)
-      deepEqual(l.min, 0)
-      deepEqual(l.max, 2)
       deepEqual(l.points, [1, 2, 3])
     })
 
@@ -145,8 +135,6 @@ export default function () {
       })
       deepEqual(l.spacing, 1)
       deepEqual(l.end, -3)
-      deepEqual(l.min, -2)
-      deepEqual(l.max, 0)
       deepEqual(l.points, [-1, -2, -3])
     })
   })
@@ -164,8 +152,6 @@ export default function () {
       })
       deepEqual(l.spacing, 1)
       deepEqual(l.end, 2)
-      deepEqual(l.min, 0)
-      deepEqual(l.max, 2)
       deepEqual(l.points, [0, 1, 2])
     })
 
@@ -181,8 +167,6 @@ export default function () {
       })
       deepEqual(l.spacing, 1)
       deepEqual(l.end, -2)
-      deepEqual(l.min, -2)
-      deepEqual(l.max, 0)
       deepEqual(l.points, [0, -1, -2])
     })
   })
@@ -200,8 +184,6 @@ export default function () {
       })
       deepEqual(l.spacing, 1)
       deepEqual(l.end, 2)
-      deepEqual(l.min, 0)
-      deepEqual(l.max, 2)
       deepEqual(l.points, [0, 1, 2])
     })
 
@@ -217,8 +199,6 @@ export default function () {
       })
       deepEqual(l.spacing, 1)
       deepEqual(l.end, -2)
-      deepEqual(l.min, -2)
-      deepEqual(l.max, 0)
       deepEqual(l.points, [0, -1, -2])
     })
   })

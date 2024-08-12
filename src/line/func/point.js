@@ -2,6 +2,8 @@
 /** @typedef {import("../options.js").PosAssignOptions} PosAssignOptions */
 /** @typedef {import("../imports.js").Point.Point} Point */
 
+import { from } from './time.js'
+
 /**
  * يتحقق ما إذا كانت النقطة داخل نقاط المستقيم
  * @param {Line} line - المستقيم المراد التحقق عليه
@@ -16,9 +18,9 @@
  * const pointInLine = inside(line, 15)
  * // pointInLine = false
  */
-export function inside({ min, max }, point) {
+export function inside(line, point) {
   // أعد صحيح إذا كانت النقطة داخل النطاق
-  return point >= min && point <= max
+  return point >= from.min(line) && point <= from.max(line)
 }
 
 /**
@@ -45,18 +47,18 @@ export function inside({ min, max }, point) {
  * const newCurrent = ride(line, -3, 2, true)
  * // newCurrent = -5
  */
-export function ride({ min, max, neg }, current, step, inverse = false) {
+export function ride(line, current, step, inverse = false) {
   // إذا كانت الخطوة تساوي صفرًا، أعد الموضع الحالي دون تغييره
   if (step === 0) return current
 
   // تحقق مما إذا كان إتجاه الحركة معكوساً على مستقيم سالب.
   // إذا تطابقت، زد الموضع الحالي بالخطوة ولكن لا تتجاوز القيمة القصوى
   // إذا لم تتطابق، قلل الموضع الحالي بالخطوة ولكن لا تنزل تحت القيمة الدنيا
-  return inverse === neg
+  return inverse === line.neg
     ? // إذا كانت الحركة للأمام على مستقيم موجب أو للخلف على مستقيم سالب، تحرك خطوة بالموجب دون تجاوز القيمة القصوى
-      Math.min(current + step, max)
+      Math.min(current + step, from.max(line))
     : // إذا كانت الحركة للأمام على مستقيم سالب أو للخلف على مستقيم موجب، تحرك خطوة بالسالب دون تجاوز القيمة الدنيا
-      Math.max(current - step, min)
+      Math.max(current - step, from.min(line))
 }
 
 /**
