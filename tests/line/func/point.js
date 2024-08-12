@@ -96,35 +96,35 @@ export default function () {
     it('3.1: خطوة صفر', function () {
       // [0 <- 5 -> 10] 0>> = [0 <- 5 -> 10]
 
-      const a = Line.point.move(line, current, 0)
+      const a = Line.point.ride(line, current, 0)
       equal(a, 5)
     })
 
     it('3.2: الحركة للأمام داخل النطاق', function () {
       // [0 <- 5 -> 10] 3>> = [0 <- 8 -> 10]
 
-      const a = Line.point.move(line, current, 3)
+      const a = Line.point.ride(line, current, 3)
       equal(a, 8)
     })
 
     it('3.3: عدم تجاوز الحد الأقصى', function () {
       // [0 <- 5 -> 10] 10>> = [0 <-> '10]
 
-      const a = Line.point.move(line, current, 10)
+      const a = Line.point.ride(line, current, 10)
       equal(a, 10)
     })
 
     it('3.4: الحركة للخلف داخل النطاق', function () {
       // [0 <- 5 -> 10] <<3 = [0 <- 2 -> 10]
 
-      const a = Line.point.move(line, current, 3, true)
+      const a = Line.point.ride(line, current, 3, true)
       equal(a, 2)
     })
 
     it('3.5: عدم تجاوز الحد الأدنى', function () {
       // [0 <- 5 -> 10] <<10 = [0' <-> 10]
 
-      const a = Line.point.move(line, current, 10, true)
+      const a = Line.point.ride(line, current, 10, true)
       equal(a, 0)
     })
   })
@@ -138,35 +138,35 @@ export default function () {
     it('4.1: خطوة صفر', function () {
       // [-10 <- -5 -> 0] <<0 = [-10 <- -5 -> 0]
 
-      const a = Line.point.move(line, current, 0)
+      const a = Line.point.ride(line, current, 0)
       equal(a, -5)
     })
 
     it('4.2: الحركة للأمام داخل النطاق', function () {
       // [-10 <- -5 -> 0] <<3 = [-10 <- -8 -> 0]
 
-      const a = Line.point.move(line, current, 3)
+      const a = Line.point.ride(line, current, 3)
       equal(a, -8)
     })
 
     it('4.3: عدم تجاوز الحد الأقصى', function () {
       // [-10 <- -5 -> 0] <<10 = [-10' <-> 0]
 
-      const a = Line.point.move(line, current, 10)
+      const a = Line.point.ride(line, current, 10)
       equal(a, -10)
     })
 
     it('4.4: الحركة للخلف داخل النطاق', function () {
       // [-10 <- -5 -> 0] 3>> = [-10 <- -2 -> 0]
 
-      const a = Line.point.move(line, current, 3, true)
+      const a = Line.point.ride(line, current, 3, true)
       equal(a, -2)
     })
 
     it('4.5: عدم تجاوز الحد الأدنى', function () {
       // [-10 <- -5 -> 0] 10>> = [-10 <-> '0]
 
-      const a = Line.point.move(line, current, 10, true)
+      const a = Line.point.ride(line, current, 10, true)
       equal(a, 0)
     })
   })
@@ -179,7 +179,7 @@ export default function () {
     it('5.1: عكس مستقيم', function () {
       // [0 -> 10] => [10 <- 0]
 
-      const a = Line.point.updatePos.flip(line)
+      const a = Line.point.move.flip(line)
       equal(a.start, 10)
       equal(a.end, 0)
     })
@@ -187,14 +187,14 @@ export default function () {
     it('5.2: تحديث موضع البداية فقط', function () {
       // [0 -> 10] => [5 -> 10]
 
-      let a = Line.point.updatePos(line, 5, { type: 'by', target: 'start' })
+      let a = Line.point.move(line, 5, { type: 'by', target: 'start' })
 
       equal(a.start, 5)
       equal(a.end, 10)
 
       // [5 -> 10] => [10 <- 20]
 
-      a = Line.point.updatePos(a, 20, { type: 'to', target: 'start' })
+      a = Line.point.move(a, 20, { type: 'to', target: 'start' })
       equal(a.start, 20)
       equal(a.end, 10)
     })
@@ -202,13 +202,13 @@ export default function () {
     it('5.3: تحديث موضع النهاية فقط', function () {
       // [0 -> 10] => [0 -> 15]
 
-      let a = Line.point.updatePos(line, 5, { type: 'by', target: 'end' })
+      let a = Line.point.move(line, 5, { type: 'by', target: 'end' })
       equal(a.start, 0)
       equal(a.end, 15)
 
       // [0 -> 15] => [0 -> 20]
 
-      a = Line.point.updatePos(a, 20, { type: 'to', target: 'end' })
+      a = Line.point.move(a, 20, { type: 'to', target: 'end' })
       equal(a.start, 0)
       equal(a.end, 20)
     })
@@ -216,13 +216,13 @@ export default function () {
     it('5.4: تحديث موضع البداية والنهاية معاً', function () {
       // [0 -> 10] => [5 -> 15]
 
-      let a = Line.point.updatePos(line, 5, { type: 'by', target: 'both' })
+      let a = Line.point.move(line, 5, { type: 'by', target: 'both' })
       equal(a.start, 5)
       equal(a.end, 15)
 
       // [5 -> 15] => [20 -> 20]
 
-      a = Line.point.updatePos(a, 20, { type: 'to', target: 'both' })
+      a = Line.point.move(a, 20, { type: 'to', target: 'both' })
       equal(a.start, 20)
       equal(a.end, 20)
     })

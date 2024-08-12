@@ -30,22 +30,22 @@ export function inside({ min, max }, point) {
  * @returns {Point} يعيد الموضع الجديد بعد التحرك
  * @example <caption>تحريك النقطة للأمام على مستقيم موجب</caption>
  * const line = Line.create.one({ end: 10 })
- * const newCurrent = move(line, 3, 2)
+ * const newCurrent = ride(line, 3, 2)
  * // newCurrent = 5
  * @example <caption>تحريك النقطة للخلف على مستقيم موجب</caption>
  * const line = Line.create.one({ end: 10 })
- * const newCurrent = move(line, 3, 2, true)
+ * const newCurrent = ride(line, 3, 2, true)
  * // newCurrent = 1
  * @example <caption>تحريك النقطة للأمام على مستقيم سالب</caption>
  * const line = Line.create.one({ end: -10 })
- * const newCurrent = move(line, -3, 2)
+ * const newCurrent = ride(line, -3, 2)
  * // newCurrent = -1
  * @example <caption>تحريك النقطة للخلف على مستقيم سالب</caption>
  * const line = Line.create.one({ end: -10 })
- * const newCurrent = move(line, -3, 2, true)
+ * const newCurrent = ride(line, -3, 2, true)
  * // newCurrent = -5
  */
-export function move({ min, max, neg }, current, step, inverse = false) {
+export function ride({ min, max, neg }, current, step, inverse = false) {
   // إذا كانت الخطوة تساوي صفرًا، أعد الموضع الحالي دون تغييره
   if (step === 0) return current
 
@@ -66,7 +66,7 @@ export function move({ min, max, neg }, current, step, inverse = false) {
  * @param {PosAssignOptions} options - الخيارات لتعيين الموضع
  * @returns {Line} - كائن الخط المحدّث
  */
-export function updatePos(line, value, { type = 'to', target = 'both' }) {
+export function move(line, value, { type = 'to', target = 'both' }) {
   if (target === 'end') {
     // تحديث موضع النهاية فقط للخط
     line.end = type === 'to' ? value : line.end + value
@@ -92,10 +92,10 @@ export function updatePos(line, value, { type = 'to', target = 'both' }) {
  * @param {Line} line - كائن الخط الذي سيتم عكسه
  * @returns {Line} - كائن الخط المعكوس
  */
-updatePos.flip = function (line) {
+move.flip = function (line) {
   const temp = line.start // تخزين موضع البداية مؤقتاً
-  updatePos(line, line.end, { type: 'to', target: 'start' }) // تعيين موضع البداية إلى موضع النهاية
-  updatePos(line, temp, { type: 'to', target: 'end' }) // تعيين موضع النهاية إلى موضع البداية الأصلي
+  move(line, line.end, { type: 'to', target: 'start' }) // تعيين موضع البداية إلى موضع النهاية
+  move(line, temp, { type: 'to', target: 'end' }) // تعيين موضع النهاية إلى موضع البداية الأصلي
 
   return line // إرجاع كائن الخط المعكوس
 }

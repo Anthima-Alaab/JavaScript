@@ -35,10 +35,10 @@ const pointInLine = inside(line, 15);
 import { Line } from './JavaScript-main/src/exports.js'
 
 const line = Line.create.one({ end: 10 });
-const newCurrent = move(line, 3, 2);
+const newCurrent = ride(line, 3, 2);
 // newCurrent = 5
 
-const newCurrent = move(line, 3, 2, true);
+const newCurrent = ride(line, 3, 2, true);
 // newCurrent = 1
 ```
 
