@@ -1,7 +1,7 @@
 {
   "displayName": "Anthima Alaab | أنظمة ألعاب",
   "name": "anthima",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "تطبيق أنظمة الألعاب بلغة جافاسكربت",
   "scripts": {
     "types": "tsc -p ./tsconfig.json && node ./cli/src/clean.js",

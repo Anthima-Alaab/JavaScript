@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Anthima-Alaab/JavaScript/compare/v1.1.0...v1.1.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* **line:** إصلاح منطق دوال الوقت ([23f5fc2](https://github.com/Anthima-Alaab/JavaScript/commit/23f5fc219a4e7bf23d16c11c31b97f3df1333d24))
+
 # 1.0.0 (2024-08-12)
 
 
