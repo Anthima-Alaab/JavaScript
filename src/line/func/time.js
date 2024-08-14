@@ -15,13 +15,14 @@
  * const t = Line.time.to(line, -5)
  * // t = 0.5
  */
-export function to({ dis, neg, end }, point) {
-  // إذا كانت النقطة عند البداية، إرجاع 0 إذا لم يكن سالباً، وإرجاع 1 إذا كان سالباً
-  if (point === 0) return neg ? 1 : 0
-  // إذا كانت النقطة عند النهاية، إرجاع 1 إذا لم يكن سالباً، وإرجاع 0 إذا كان سالباً
-  if (point === end) return neg ? 0 : 1
+export function to({ start, dis, neg, end }, point) {
+  // إذا كانت النقطة عند البداية، نرجع 0
+  if (point === start) return 0
+  // إذا كانت النقطة عند النهاية، نرجع 1
+  if (point === end) return 1
   // حساب النسبة الأحادية للنقطة على المستقيم
-  return neg ? -(point / dis) : point / dis
+  const disPoint = point - start
+  return neg ? -(disPoint / dis) : disPoint / dis
 }
 
 /**
@@ -39,10 +40,10 @@ export function to({ dis, neg, end }, point) {
  * // t = 0
  */
 to.clamp = function (line, point) {
-  // إذا كانت النقطة أكبر من الحد الأقصى، إرجاع 1
-  if (point >= from.max(line)) return 1
-  // إذا كانت النقطة أقل من الحد الأدنى، إرجاع 0
-  if (point <= from.min(line)) return 0
+  // إذا كانت النقطة أقل من الحد الأدنى، نثبت القيمة عند الحد الأدنى
+  if (point <= from.min(line)) point = from.min(line)
+  // إذا كانت النقطة أكبر من الحد الأقصى، نثبت القيمة عند الحد الأقصى
+  else if (point >= from.max(line)) point = from.max(line)
   // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
@@ -58,8 +59,9 @@ to.clamp = function (line, point) {
  * // t = 0
  */
 to.clamp.min = function (line, point) {
-  // إذا كانت النقطة أقل من الحد الأدنى، إرجاع 0
-  if (point <= from.min(line)) return 0
+  const { start, neg } = line
+  // إذا كانت النقطة أقل من الحد الأدنى، نرجع نقطة البداية
+  if ((!neg && point <= start) || (neg && point >= start)) point = start
   // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
@@ -75,8 +77,9 @@ to.clamp.min = function (line, point) {
  * // t = 1
  */
 to.clamp.max = function (line, point) {
-  // إذا كانت النقطة أكبر من الحد الأقصى، إرجاع 1
-  if (point >= from.max(line)) return 1
+  const { end, neg } = line
+  // إذا كانت النقطة أكبر من الحد الأقصى، نرجع نقطة النهاية
+  if ((!neg && point >= end) || (neg && point <= end)) point = end
   // حساب النسبة الأحادية المقيدة للنقطة على المستقيم
   return to(line, point)
 }
@@ -95,16 +98,14 @@ to.clamp.max = function (line, point) {
  * const t = Line.time.from(line, 0.5)
  * // t = -5
  */
-export function from(line, t) {
-  // إذا كانت النسبة 1، إرجاع الحد الأقصى
-  if (t === 1) return from.max(line)
-  // إذا كانت النسبة 0، إرجاع الحد الأدنى
-  if (t === 0) return from.min(line)
-
-  const { start, dis, neg } = line
+export function from({ start, end, dis, neg }, t) {
+  // إذا كانت النسبة 1، نرجع نقطة النهاية
+  if (t === 1) return end
+  // إذا كانت النسبة 0، نرجع نقطة البداية
+  if (t === 0) return start
 
   // حساب النقطة بناءً على النسبة المئوية
-  if (neg) return start - (dis - dis * t)
+  if (neg) return start - dis * t
   else return start + dis * t
 }
 
@@ -123,10 +124,10 @@ export function from(line, t) {
  * // t = 0
  */
 from.clamp = function (line, t) {
-  // إذا كانت النسبة أكبر من أو تساوي 1، إرجاع الحد الأقصى
-  if (t >= 1) return from.max(line)
-  // إذا كانت النسبة أقل من أو تساوي 0، إرجاع الحد الأدنى
-  if (t <= 0) return from.min(line)
+  // إذا كانت النسبة أكبر من أو تساوي 1، نرجع نقطة النهاية
+  if (t >= 1) return line.end
+  // إذا كانت النسبة أقل من أو تساوي 0، نرجع نقطة البداية
+  if (t <= 0) return line.start
   // حساب النقطة بناءً على النسبة الأحادية المقيدة
   return from(line, t)
 }
@@ -142,8 +143,8 @@ from.clamp = function (line, t) {
  * // t = 10
  */
 from.clamp.max = function (line, t) {
-  // إذا كانت النسبة أكبر من أو تساوي 1، إرجاع الحد الأقصى
-  if (t >= 1) return from.max(line)
+  // إذا كانت النسبة أكبر من أو تساوي 1، نرجع نقطة النهاية
+  if (t >= 1) return line.end
   // حساب النقطة بناءً على النسبة الأحادية
   return from(line, t)
 }
@@ -159,8 +160,8 @@ from.clamp.max = function (line, t) {
  * // t = 0
  */
 from.clamp.min = function (line, t) {
-  // إذا كانت النسبة أقل من أو تساوي 0، إرجاع الحد الأدنى
-  if (t <= 0) return from.min(line)
+  // إذا كانت النسبة أقل من أو تساوي 0، نرجع نقطة البداية
+  if (t <= 0) return line.start
   // حساب النقطة بناءً على النسبة الأحادية
   return from(line, t)
 }
